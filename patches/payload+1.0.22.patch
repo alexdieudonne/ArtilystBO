@@ -1,0 +1,48 @@
+diff --git a/node_modules/payload/dist/express/middleware/index.js b/node_modules/payload/dist/express/middleware/index.js
+index 77c8340..4296d63 100644
+--- a/node_modules/payload/dist/express/middleware/index.js
++++ b/node_modules/payload/dist/express/middleware/index.js
+@@ -1,5 +1,5 @@
+ "use strict";
+-var __importDefault = (this && this.__importDefault) || function (mod) {
++var __importDefault = (this && this.__importDefault) || function(mod) {
+     return (mod && mod.__esModule) ? mod : { "default": mod };
+ };
+ Object.defineProperty(exports, "__esModule", { value: true });
+diff --git a/node_modules/payload/dist/init.js b/node_modules/payload/dist/init.js
+index b1fb531..71d7c27 100644
+--- a/node_modules/payload/dist/init.js
++++ b/node_modules/payload/dist/init.js
+@@ -1,5 +1,5 @@
+ "use strict";
+-var __importDefault = (this && this.__importDefault) || function (mod) {
++var __importDefault = (this && this.__importDefault) || function(mod) {
+     return (mod && mod.__esModule) ? mod : { "default": mod };
+ };
+ Object.defineProperty(exports, "__esModule", { value: true });
+@@ -36,7 +36,7 @@ const init = (payload, options) => {
+     if (options.mongoURL !== false && typeof options.mongoURL !== 'string') {
+         throw new Error('Error: missing MongoDB connection URL.');
+     }
+-    payload.emailOptions = { ...(options.email) };
++    payload.emailOptions = {...(options.email) };
+     payload.secret = crypto_1.default
+         .createHash('sha256')
+         .update(options.secret)
+@@ -84,14 +84,14 @@ const init = (payload, options) => {
+         payload.express.use(payload.config.routes.api, payload.router);
+         // Enable static routes for all collections permitting upload
+         (0, static_1.default)(payload);
+-        payload.errorHandler = (0, errorHandler_1.default)(payload.config, payload.logger);
++        payload.errorHandler = payload.errorHandler || (0, errorHandler_1.default)(payload.config, payload.logger);
+         payload.router.use(payload.errorHandler);
+         payload.authenticate = (0, authenticate_1.default)(payload.config);
+     }
+     (0, serverInit_1.serverInit)(payload);
+ };
+ exports.init = init;
+-const initAsync = async (payload, options) => {
++const initAsync = async(payload, options) => {
+     payload.logger = (0, logger_1.default)('payload', options.loggerOptions);
+     payload.mongoURL = options.mongoURL;
+     if (payload.mongoURL) {
